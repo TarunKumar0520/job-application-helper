@@ -4,7 +4,9 @@ import * as React from "react";
 import { ChevronDown, Loader2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { updateStatusAction } from "@/app/actions";
+import { Toast } from "@/components/ui/toast";
 import type { ApplicationStatus } from "@/lib/ai/types";
+
 
 const statusConfig: Record<
   ApplicationStatus,
@@ -55,6 +57,7 @@ interface StatusSelectProps {
 export function StatusSelect({ applicationId, initialStatus }: StatusSelectProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [currentStatus, setCurrentStatus] = React.useState<ApplicationStatus>(initialStatus);
+  const [toast, setToast] = React.useState<{ message: string; type: "success" | "error" } | null>(null);
   const [isPending, startTransition] = React.useTransition();
   const dropdownRef = React.useRef<HTMLDivElement>(null);
 
@@ -82,7 +85,9 @@ export function StatusSelect({ applicationId, initialStatus }: StatusSelectProps
       if (!res.success) {
         // Revert on failure
         setCurrentStatus(currentStatus);
-        alert(res.error || "Failed to update status.");
+        setToast({ message: res.error || "Failed to update status.", type: "error" });
+      } else {
+        setToast({ message: `Status updated to ${newStatus}!`, type: "success" });
       }
     });
   };
@@ -140,6 +145,13 @@ export function StatusSelect({ applicationId, initialStatus }: StatusSelectProps
             })}
           </div>
         </div>
+      )}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
       )}
     </div>
   );

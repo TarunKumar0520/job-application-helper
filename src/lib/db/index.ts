@@ -11,7 +11,16 @@ if (!connectionString) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
-// Disable prefetch for PgBouncer/Supabase pooled connections compat
-const client = postgres(connectionString, { prepare: false });
+// Prevent multiple connections during Next.js Hot Reloading in development
+declare global {
+  var postgresClient: ReturnType<typeof postgres> | undefined;
+}
+
+const client = globalThis.postgresClient || postgres(connectionString, { prepare: false });
+
+if (process.env.NODE_ENV !== "production") {
+  globalThis.postgresClient = client;
+}
 
 export const db = drizzle(client, { schema });
+
