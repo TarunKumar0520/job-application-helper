@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink, Target } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { EvidencePanel, type SelectedEvidence } from "@/components/evidence/evidence-panel";
+import { StatusSelect } from "@/components/applications/status-select";
 import { cn, formatDate } from "@/lib/utils";
 import type { getApplication } from "@/lib/db/queries";
 
@@ -37,12 +38,13 @@ export function ApplicationDetailClient({ application }: { application: Applicat
             <div className="flex items-start justify-between gap-4 max-sm:flex-col">
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge tone={application.status}>{application.status}</Badge>
+                  <StatusSelect applicationId={application.id} initialStatus={application.status} />
                   <Badge tone={application.priority}>{application.priority} priority</Badge>
                 </div>
                 <h1 className="mt-4 text-3xl font-semibold tracking-normal text-zinc-950">{application.job.title}</h1>
                 <p className="mt-2 text-zinc-600">{application.job.company} · {application.job.location}</p>
               </div>
+
               <div className="rounded-lg border border-indigo-200 bg-indigo-50 px-5 py-4 text-center">
                 <p className="text-sm font-medium text-indigo-700">Fit score</p>
                 <p className="mt-1 text-4xl font-semibold text-indigo-950">{report.fitScore}%</p>

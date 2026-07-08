@@ -249,3 +249,11 @@ export async function getDashboardStats() {
     }, {}),
   };
 }
+
+export async function updateApplicationStatus(id: string, status: ApplicationStatus) {
+  await db
+    .update(schema.applications)
+    .set({ status, updatedAt: new Date() })
+    .where(eq(schema.applications.id, id));
+}
+

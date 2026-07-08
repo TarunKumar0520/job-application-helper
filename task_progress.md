@@ -27,25 +27,27 @@ This document tracks the implementation progress of the Job Application Copilot,
 - [x] Created the side-by-side [Evidence Panel](src/components/evidence/evidence-panel.tsx) to dynamically highlight cited lines from the resume or job description on citation click.
 - [x] Renders parsed resume and job requirement screens line-by-line (`src/app/resume/page.tsx` and `src/app/jobs/[id]/page.tsx`).
 
+### Phase 5: Database Integration & Deployment
+- [x] Connected to Supabase Postgres instance.
+- [x] Confirmed database environment credentials in `.env.local` (resolved URL quotes parsing issue).
+- [x] Handled Drizzle migrations on Supabase instance.
+- [x] Ported query layer in `queries.ts` to use active Drizzle DB calls.
+- [x] Populated seed data to Supabase database.
+- [x] Initialized Git repository and pushed to [job-application-helper](https://github.com/TarunKumar0520/job-application-helper).
+- [x] Connected project to Vercel and successfully deployed production build.
+
 ---
 
-## Remaining Work (Account-Gated & Deployment)
+## Remaining Work & Future Roadmap
 
-The local mock/seed version compiles and lints with **zero errors**. The remaining roadmap focuses on hooking up the persistent Postgres database and deploying the final product:
+With the database connected and the live deployment working, the codebase is fully ready for feature development:
 
-### 1. Database Integration
-- [ ] Connect/create a hosted **Supabase Postgres** instance.
-- [ ] Set up environment variables in `.env.local` containing `DATABASE_URL`.
-- [ ] Generate Drizzle SQL migrations (`npx.cmd drizzle-kit generate` or `npx.cmd drizzle-kit push`).
-- [ ] Run the migration script on the live Supabase instance.
-- [ ] Port the mock query layer in `queries.ts` to fetch and update actual data using Drizzle (`db.select()`, `db.insert()`, etc.) instead of reading local `seed-data.ts` objects directly.
-- [ ] Migrate the seed data file to a database seed script (`db/seed.ts`) to populate the live database instance.
+### 1. Interactive CRUD & Status Updates
+- [x] Implement Server Actions in Next.js to handle changing application statuses (transitioning between `saved`, `applied`, `interviewing`, `offer`, `rejected`).
+- [x] Add interactive state buttons/dropdowns in the UI (on `/applications/[id]`) to let recruiters or candidates update application progress directly.
 
-### 2. Status Actions (Interactive CRUD)
-- [ ] Add basic interactive buttons to change application statuses (e.g., transition between `saved`, `applied`, `interviewing`, `offer`, `rejected`) using Server Actions or API routes.
+### 2. Phase 2 Features (V2 Upgrade)
+- [ ] **OpenAI Integration**: Replace the mock provider in `src/lib/ai/mock-provider.ts` with a real GPT-based provider using OpenAI Structured Outputs (via Zod schemas) to automatically analyze new job postings.
+- [ ] **Auth Integration**: Add authentication (e.g., Supabase Auth or NextAuth) to support multi-user accounts.
+- [ ] **PDF Resume Parser**: Integrate a library to parse uploaded PDFs and map them into the `resume_lines` format.
 
-### 3. Production Deployment
-- [ ] Initialize a private Git repository for the project.
-- [ ] Set up a deployment project on **Vercel**.
-- [ ] Configure hosted environment variables (database connection string) in the Vercel dashboard.
-- [ ] Deploy and verify the live production build.
