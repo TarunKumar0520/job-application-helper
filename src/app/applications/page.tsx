@@ -3,7 +3,8 @@ import { ArrowLeft } from "lucide-react";
 import { ApplicationList } from "@/components/applications/application-list";
 import { getApplications } from "@/lib/db/queries";
 
-export default function ApplicationsPage() {
+export default async function ApplicationsPage() {
+  const applications = await getApplications();
   return (
     <main className="min-h-screen bg-stone-50 px-6 py-8 max-sm:px-4">
       <div className="mx-auto max-w-7xl">
@@ -16,7 +17,7 @@ export default function ApplicationsPage() {
           Seeded applications that prove the database model, status pipeline, fit scores, and evidence-backed report flow.
         </p>
         <div className="mt-6">
-          <ApplicationList applications={getApplications()} />
+          <ApplicationList applications={applications} />
         </div>
       </div>
     </main>

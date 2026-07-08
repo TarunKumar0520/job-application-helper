@@ -4,7 +4,7 @@ import { getApplication } from "@/lib/db/queries";
 
 export default async function ApplicationDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const application = getApplication(id);
+  const application = await getApplication(id);
 
   if (!application) {
     notFound();

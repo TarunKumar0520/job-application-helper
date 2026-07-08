@@ -7,7 +7,7 @@ import { EvidencePanel, type SelectedEvidence } from "@/components/evidence/evid
 import { cn, formatDate } from "@/lib/utils";
 import type { getApplication } from "@/lib/db/queries";
 
-type ApplicationDetail = NonNullable<ReturnType<typeof getApplication>>;
+type ApplicationDetail = NonNullable<Awaited<ReturnType<typeof getApplication>>>;
 
 const findingTone = {
   strength: "border-emerald-200 bg-emerald-50 text-emerald-800",

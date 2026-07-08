@@ -4,8 +4,8 @@ import { ApplicationList } from "@/components/applications/application-list";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { getDashboardStats } from "@/lib/db/queries";
 
-export default function Home() {
-  const stats = getDashboardStats();
+export default async function Home() {
+  const stats = await getDashboardStats();
 
   return (
     <main className="min-h-screen bg-stone-50 px-6 py-8 max-sm:px-4">
@@ -21,7 +21,7 @@ export default function Home() {
             </p>
           </div>
           <Link
-            href="/applications/app-cloud"
+            href="/applications/22222222-2222-2222-2222-222222222222"
             className="inline-flex items-center gap-2 rounded-md bg-zinc-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-indigo-800"
           >
             Open stretch report

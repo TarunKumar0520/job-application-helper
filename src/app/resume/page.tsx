@@ -2,8 +2,8 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getResume } from "@/lib/db/queries";
 
-export default function ResumePage() {
-  const resume = getResume();
+export default async function ResumePage() {
+  const resume = await getResume();
 
   return (
     <main className="min-h-screen bg-stone-50 px-6 py-8 max-sm:px-4">

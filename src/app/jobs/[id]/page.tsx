@@ -9,7 +9,7 @@ export default async function JobPage({ params }: { params: Promise<{ id: string
   let job;
 
   try {
-    job = getJob(id);
+    job = await getJob(id);
   } catch {
     notFound();
   }

@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
 import type { getApplications } from "@/lib/db/queries";
 
-type ApplicationRow = ReturnType<typeof getApplications>[number];
+type ApplicationRow = Awaited<ReturnType<typeof getApplications>>[number];
 
 export function ApplicationList({ applications }: { applications: ApplicationRow[] }) {
   return (
